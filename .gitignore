@@ -6,6 +6,7 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+tsconfig.tsbuildinfo
 
 node_modules
 dist
@@ -23,5 +24,8 @@ dist-ssr
 *.sln
 *.sw?
 
+# env
 .env
-tsconfig.tsbuildinfo
+.env.dev
+.env.prod
+.dev.local

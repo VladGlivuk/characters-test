@@ -3,7 +3,8 @@ import { Character } from './character';
 import { Pagination } from './pagination';
 
 export type CharactersStore = {
-  characters: Array<Character>;
+  charactersList: Array<Character>;
+  character: Character | null;
   pagination: Pagination;
   fetchCharacters: (params?: HttpCharactersParams) => Promise<void>;
   fetchCharacterById: (id: number) => Promise<void>;

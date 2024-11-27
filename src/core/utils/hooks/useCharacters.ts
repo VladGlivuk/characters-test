@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useInfiniteScroll } from './useInfiniteScroll';
-import useCharactersStore from '../../../store/characters/useCharactersStore';
+import useCharactersStore from '@/store/characters/useCharactersStore';
 
 function useCharacters() {
-  const { pagination, fetchCharacters, characters } = useCharactersStore();
+  const { pagination, fetchCharacters, charactersList } = useCharactersStore();
 
   const [isLoading, setIsLoading] = useState(false);
   const [searchValue, setSearchValue] = useState('');
@@ -50,7 +50,7 @@ function useCharacters() {
   };
 
   return {
-    characters,
+    charactersList,
     isLoading,
     observerRef,
     searchChangeHandler

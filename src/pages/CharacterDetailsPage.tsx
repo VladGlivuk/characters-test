@@ -1,5 +1,7 @@
+import Character from '@/components/Character';
+
 function CharacterDetailsPage() {
-  return <div>CharacterDetailsPage</div>;
+  return <Character />;
 }
 
 export default CharacterDetailsPage;

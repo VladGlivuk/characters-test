@@ -1,15 +1,17 @@
 import { FC, useEffect } from 'react';
 import ListCharacter from '@/components/ListCharacter';
 import { Heading, SimpleGrid } from '@chakra-ui/react';
-import useCharactersStore from '../store/characters/useCharactersStore';
+import useCharactersStore from '@/store/characters/useCharactersStore';
 
 const CharactersListPage: FC = () => {
-  const { fetchCharacters, characters } = useCharactersStore();
+  const { fetchCharacters, charactersList } = useCharactersStore();
 
   useEffect(() => {
-    (async () => {
-      await fetchCharacters();
-    })();
+    if (!charactersList.length) {
+      (async () => {
+        await fetchCharacters();
+      })();
+    }
   }, []);
 
   return (
@@ -19,8 +21,8 @@ const CharactersListPage: FC = () => {
       </Heading>
 
       <SimpleGrid columns={[1, 2]} gap={8} margin={12}>
-        {!!characters.length &&
-          characters?.map((character) => (
+        {!!charactersList.length &&
+          charactersList?.map((character) => (
             <ListCharacter character={character} key={character.url + character.created} />
           ))}
       </SimpleGrid>

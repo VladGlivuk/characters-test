@@ -8,18 +8,19 @@ import { mapHttpCharacterToCharacter, mapHttpPaginationToNextPage } from '@/core
 
 const useCharactersStore = create<CharactersStore>()(
   devtools((set) => ({
-    characters: [],
+    charactersList: [],
+    character: null,
     pagination: defaultPagination,
 
     fetchCharacters: async (params) => {
       const charactersResponse = await httpGetCharacters(params);
 
-      const characters = charactersResponse.results.map(mapHttpCharacterToCharacter);
+      const charactersList = charactersResponse.results.map(mapHttpCharacterToCharacter);
 
       const nextPage = mapHttpPaginationToNextPage(charactersResponse);
 
       set({
-        characters,
+        charactersList,
         pagination: {
           currentPage: params?.page ?? DEFAULT_CURRENT_PAGE,
           nextPage
@@ -32,22 +33,23 @@ const useCharactersStore = create<CharactersStore>()(
 
       const character = mapHttpCharacterToCharacter(characterResponse);
 
-      const characters = [character];
-
-      set({ characters });
+      set({ character });
     },
 
     toggleFavorite: (id) => {
       set((state) => ({
-        characters: state.characters.map((character) =>
+        charactersList: state.charactersList.map((character) =>
           character.id === id ? { ...character, isFavorite: !character.isFavorite } : character
-        )
+        ),
+        character: state.character
+          ? { ...state.character, isFavorite: !state.character.isFavorite }
+          : state.character
       }));
     },
 
     editCharacterName: (id, name) => {
       set((state) => ({
-        characters: state.characters.map((character) =>
+        charactersList: state.charactersList.map((character) =>
           character.id === id ? { ...character, name } : character
         )
       }));

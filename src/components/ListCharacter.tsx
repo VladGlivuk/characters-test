@@ -2,10 +2,11 @@ import { FC } from 'react';
 import { css } from '@emotion/react';
 import { Box, Text, Stack, Flex, Link, Badge } from '@chakra-ui/react';
 import { Character } from '@/core/types';
+import { useNavigate } from 'react-router-dom';
 
-interface CharacterCardProps {
+type Props = {
   character: Character;
-}
+};
 
 const cardStyles = css`
   border: 1px solid #e2e8f0;
@@ -14,6 +15,7 @@ const cardStyles = css`
   background-color: #f7fafc;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease-in-out;
+  cursor: pointer;
 
   &:hover {
     transform: scale(1.05);
@@ -21,13 +23,24 @@ const cardStyles = css`
   }
 `;
 
-const CharacterCard: FC<CharacterCardProps> = ({ character }) => {
+const CharacterCard: FC<Props> = ({ character }) => {
+  const navigate = useNavigate();
+
+  const cardClickHandler = () => {
+    navigate(`/character/${character.id}`);
+  };
+
   return (
-    <Box css={cardStyles}>
+    <Box css={cardStyles} onClick={cardClickHandler}>
       <Stack spaceX={4} spaceY={4}>
-        <Text fontSize="md" fontWeight="bold" color="teal.500">
-          {character.name}
-        </Text>
+        <Flex justifyContent="space-between">
+          <Text fontSize="md" fontWeight="bold" color="teal.500">
+            {character.name}
+          </Text>
+          <Text fontSize="md" fontWeight="bold" color={character.isFavorite ? 'teal' : 'red'}>
+            {character.isFavorite ? 'Favorite' : 'Not Favorite'}
+          </Text>
+        </Flex>
         <Text>
           <strong>Height:</strong> {character.height} cm
         </Text>
@@ -35,10 +48,8 @@ const CharacterCard: FC<CharacterCardProps> = ({ character }) => {
           <strong>Mass:</strong> {character.mass} kg
         </Text>
         <Text>
-          <strong>Gender:</strong>{' '}
-          <Badge colorScheme={character.gender === 'male' ? 'blue' : 'pink'}>
-            {character.gender}
-          </Badge>
+          <strong>Gender:</strong>
+          <Badge color={character.gender === 'male' ? 'blue' : 'pink'}>{character.gender}</Badge>
         </Text>
         <Text>
           <strong>Hair Color:</strong> {character.hairColor}
