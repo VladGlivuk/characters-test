@@ -10,6 +10,7 @@ const useCharactersStore = create<CharactersStore>()(
   devtools((set) => ({
     charactersList: [],
     character: null,
+    searchValue: '',
     pagination: defaultPagination,
 
     fetchCharacters: async (params) => {
@@ -20,12 +21,23 @@ const useCharactersStore = create<CharactersStore>()(
       const nextPage = mapHttpPaginationToNextPage(charactersResponse);
 
       set((state) => ({
-        charactersList: state.charactersList && nextPage !== state.pagination.nextPage ? [...state.charactersList, ...charactersList] : charactersList,
+        charactersList:
+          state.charactersList && nextPage !== state.pagination.nextPage
+            ? [...state.charactersList, ...charactersList]
+            : charactersList,
         pagination: {
           currentPage: params?.page ?? DEFAULT_CURRENT_PAGE,
           nextPage
         }
       }));
+    },
+
+    searchCharacters: async (params) => {
+      const charactersResponse = await httpGetCharacters(params);
+
+      const charactersList = charactersResponse.results.map(mapHttpCharacterToCharacter);
+
+      set({ charactersList });
     },
 
     fetchCharacterById: async (id) => {
@@ -57,6 +69,10 @@ const useCharactersStore = create<CharactersStore>()(
         ),
         character: state.character ? { ...state.character, name } : state.character
       }));
+    },
+
+    onChangeSearchValueHandler: (searchValue) => {
+      set({ searchValue });
     }
   }))
 );

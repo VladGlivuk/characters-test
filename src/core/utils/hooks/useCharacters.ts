@@ -3,7 +3,7 @@ import { useInfiniteScroll } from './useInfiniteScroll';
 import useCharactersStore from '@/store/characters/useCharactersStore';
 
 function useCharacters() {
-  const { pagination, fetchCharacters, charactersList } = useCharactersStore();
+  const { pagination, fetchCharacters, charactersList, searchValue } = useCharactersStore();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -28,7 +28,7 @@ function useCharacters() {
       try {
         setIsLoading(true);
 
-        await fetchCharacters({ page: pagination.nextPage! });
+        await fetchCharacters({ page: pagination.nextPage!, search: searchValue });
       } catch (error) {
         console.error(error);
       } finally {
@@ -40,7 +40,7 @@ function useCharacters() {
   return {
     charactersList,
     isLoading,
-    observerRef,
+    observerRef
   };
 }
 

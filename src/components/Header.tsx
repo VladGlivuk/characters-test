@@ -1,9 +1,10 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { css } from '@emotion/react';
 import { Box, Flex, Input, Button, Spacer, Text, Link, HStack } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import LogoutButton from './LogoutButton';
 import useUserStore from '@/store/user/useUserStore';
+import useCharactersStore from '@/store/characters/useCharactersStore';
 
 const headerStyles = css`
   padding: 16px;
@@ -13,17 +14,17 @@ const headerStyles = css`
 `;
 
 const Header: FC = () => {
-  const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
 
   const { user } = useUserStore();
+  const { searchValue, onChangeSearchValueHandler, searchCharacters } = useCharactersStore();
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(event.target.value);
+    onChangeSearchValueHandler(event.target.value);
   };
 
-  const handleSearch = () => {
-    console.log('Searching for:', searchQuery);
+  const handleSearch = async () => {
+    await searchCharacters({ search: searchValue });
   };
 
   const handleNavigate = (path: string) => {
@@ -56,7 +57,7 @@ const Header: FC = () => {
         <Spacer />
         <Flex align="center">
           <Input
-            value={searchQuery}
+            value={searchValue}
             onChange={handleSearchChange}
             placeholder="Search..."
             size="sm"
