@@ -1,7 +1,4 @@
-import {
-  HttpCharacter,
-  HttpPagination,
-} from "../services/api/types";
+import { HttpCharacter, HttpPagination } from "../services/api/types";
 import { Character, Pagination } from "../store/characters/types";
 
 export function mapHttpCharacterToCharacter(
@@ -20,18 +17,10 @@ export function mapHttpCharacterToCharacter(
   };
 }
 
-export function mapHttpPaginationToPagination(
+export function mapHttpPaginationToNextPage(
   httpPagination: HttpPagination
-): Pagination {
-  return {
-    currentPage: httpPagination.count,
-
-    previousPage: httpPagination.previous
-      ? Number(httpPagination.previous.split("=").at(-1))
-      : null,
-
-    nextPage: httpPagination.next
-      ? Number(httpPagination.next.split("=").at(-1))
-      : null,
-  };
+): Pagination["nextPage"] {
+  return httpPagination.next
+    ? Number(httpPagination.next.split("=").at(-1))
+    : null;
 }

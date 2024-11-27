@@ -23,14 +23,13 @@ export type Character = {
 
 export type Pagination = {
   currentPage: number;
-  previousPage: number | null;
   nextPage: number | null;
 };
 
 export type CharactersStore = {
   characters: Array<Character>;
   pagination: Pagination;
-  fetchCharacters: (params: HttpCharactersParams) => Promise<void>;
+  fetchCharacters: (params?: HttpCharactersParams) => Promise<void>;
   fetchCharacterById: (id: number) => Promise<void>;
   toggleFavorite: (id: number) => void;
   editCharacterName: (id: number, name: string) => void;

@@ -6,34 +6,35 @@ import {
 } from "../../services/api/requests";
 import {
   mapHttpCharacterToCharacter,
-  mapHttpPaginationToPagination,
+  mapHttpPaginationToNextPage,
 } from "../../utils/mappers";
-import { HttpCharactersParams } from "../../services/api/types";
+import { DEFAULT_CURRENT_PAGE, defaultPagination } from "../../utils/constants";
 import { CharactersStore } from "./types";
 
 const useCharactersStore = create<CharactersStore>()(
   devtools((set) => ({
     characters: [],
+    pagination: defaultPagination,
 
-    pagination: {
-      currentPage: 1,
-      previousPage: null,
-      nextPage: null,
-    },
-
-    fetchCharacters: async (params: HttpCharactersParams) => {
+    fetchCharacters: async (params) => {
       const charactersResponse = await httpGetCharacters(params);
 
       const characters = charactersResponse.results.map(
         mapHttpCharacterToCharacter
       );
 
-      const pagination = mapHttpPaginationToPagination(charactersResponse);
+      const nextPage = mapHttpPaginationToNextPage(charactersResponse);
 
-      set({ characters, pagination });
+      set({
+        characters,
+        pagination: {
+          currentPage: params?.page ?? DEFAULT_CURRENT_PAGE,
+          nextPage,
+        },
+      });
     },
 
-    fetchCharacterById: async (id: number) => {
+    fetchCharacterById: async (id) => {
       const characterResponse = await httpGetCharacterById(id);
 
       const character = mapHttpCharacterToCharacter(characterResponse);
@@ -43,7 +44,7 @@ const useCharactersStore = create<CharactersStore>()(
       set({ characters });
     },
 
-    toggleFavorite: (id: number) => {
+    toggleFavorite: (id) => {
       set((state) => ({
         characters: state.characters.map((character) =>
           character.id === id
@@ -53,7 +54,7 @@ const useCharactersStore = create<CharactersStore>()(
       }));
     },
 
-    editCharacterName: (id: number, name: string) => {
+    editCharacterName: (id, name) => {
       set((state) => ({
         characters: state.characters.map((character) =>
           character.id === id ? { ...character, name } : character

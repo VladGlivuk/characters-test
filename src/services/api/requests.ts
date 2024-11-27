@@ -5,7 +5,7 @@ import {
   HttpCharacter,
 } from "./types";
 
-export async function httpGetCharacters(params: HttpCharactersParams) {
+export async function httpGetCharacters(params?: HttpCharactersParams) {
   const response = await axiosInstance.get<HttpPaginatedCharacters>("/people", {
     params,
   });

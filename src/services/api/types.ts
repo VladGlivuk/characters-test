@@ -1,5 +1,5 @@
 export type HttpCharactersParams = {
-  name?: string;
+  search?: string;
   page?: number;
 };
 
