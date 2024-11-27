@@ -11,7 +11,7 @@ import {
 import { HttpCharactersParams } from "../../services/api/types";
 import { CharactersStore } from "./types";
 
-const useCharacterStore = create<CharactersStore>()(
+const useCharactersStore = create<CharactersStore>()(
   devtools((set) => ({
     characters: [],
 
@@ -63,4 +63,4 @@ const useCharacterStore = create<CharactersStore>()(
   }))
 );
 
-export default useCharacterStore;
+export default useCharactersStore;
