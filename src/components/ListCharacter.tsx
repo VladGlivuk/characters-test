@@ -25,7 +25,7 @@ const CharacterCard: FC<CharacterCardProps> = ({ character }) => {
   return (
     <Box css={cardStyles}>
       <Stack spaceX={4} spaceY={4}>
-        <Text fontSize='md' fontWeight='bold' color='teal.500'>
+        <Text fontSize="md" fontWeight="bold" color="teal.500">
           {character.name}
         </Text>
         <Text>
@@ -35,7 +35,10 @@ const CharacterCard: FC<CharacterCardProps> = ({ character }) => {
           <strong>Mass:</strong> {character.mass} kg
         </Text>
         <Text>
-          <strong>Gender:</strong> <Badge colorScheme={character.gender === 'male' ? 'blue' : 'pink'}>{character.gender}</Badge>
+          <strong>Gender:</strong>{' '}
+          <Badge colorScheme={character.gender === 'male' ? 'blue' : 'pink'}>
+            {character.gender}
+          </Badge>
         </Text>
         <Text>
           <strong>Hair Color:</strong> {character.hairColor}
@@ -51,29 +54,29 @@ const CharacterCard: FC<CharacterCardProps> = ({ character }) => {
         </Text>
         <Text>
           <strong>Homeworld:</strong>{' '}
-          <Link href={character.homeworld} color='teal.500'>
+          <Link href={character.homeworld} color="teal.500">
             View Homeworld
           </Link>
         </Text>
-        <Flex flexDirection='column'>
+        <Flex flexDirection="column">
           <strong>Films:</strong>
           <Stack spaceX={2} mt={2}>
             {character.films.map((film, index) => (
               <Box key={index}>
-                <Link href={film} color='teal.500'>
+                <Link href={film} color="teal.500">
                   {film}
                 </Link>
               </Box>
             ))}
           </Stack>
         </Flex>
-        <Flex flexDirection='column'>
+        <Flex flexDirection="column">
           <strong>Starships:</strong>
           {character.starships.length > 0 ? (
             <Stack spaceX={2} mt={2}>
               {character.starships.map((starship, index) => (
                 <Box key={index}>
-                  <Link href={starship} color='teal.500'>
+                  <Link href={starship} color="teal.500">
                     {starship}
                   </Link>
                 </Box>

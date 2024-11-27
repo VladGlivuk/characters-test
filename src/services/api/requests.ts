@@ -3,7 +3,7 @@ import { HttpCharactersParams, HttpPaginatedCharacters, HttpCharacter } from '@/
 
 export async function httpGetCharacters(params?: HttpCharactersParams) {
   const response = await axiosInstance.get<HttpPaginatedCharacters>('people', {
-    params,
+    params
   });
 
   return response.data;

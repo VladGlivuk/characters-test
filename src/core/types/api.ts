@@ -26,7 +26,7 @@ export type HttpPagination = {
   count: number;
   next: string | null;
   previous: string | null;
-}
+};
 
 export type HttpPaginatedCharacters = HttpPagination & {
   results: Array<HttpCharacter>;

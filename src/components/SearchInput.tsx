@@ -1,5 +1,5 @@
-import { ChangeEventHandler } from "react";
-import { Input } from "@chakra-ui/react";
+import { ChangeEventHandler } from 'react';
+import { Input } from '@chakra-ui/react';
 
 type Props = {
   searchValue: string;

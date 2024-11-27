@@ -22,8 +22,8 @@ const useCharactersStore = create<CharactersStore>()(
         characters,
         pagination: {
           currentPage: params?.page ?? DEFAULT_CURRENT_PAGE,
-          nextPage,
-        },
+          nextPage
+        }
       });
     },
 
@@ -39,15 +39,19 @@ const useCharactersStore = create<CharactersStore>()(
 
     toggleFavorite: (id) => {
       set((state) => ({
-        characters: state.characters.map((character) => (character.id === id ? { ...character, isFavorite: !character.isFavorite } : character)),
+        characters: state.characters.map((character) =>
+          character.id === id ? { ...character, isFavorite: !character.isFavorite } : character
+        )
       }));
     },
 
     editCharacterName: (id, name) => {
       set((state) => ({
-        characters: state.characters.map((character) => (character.id === id ? { ...character, name } : character)),
+        characters: state.characters.map((character) =>
+          character.id === id ? { ...character, name } : character
+        )
       }));
-    },
+    }
   }))
 );
 

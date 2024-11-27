@@ -42,7 +42,7 @@ function useCharacters() {
       } finally {
         setIsLoading(false);
       }
-    },
+    }
   });
 
   const searchChangeHandler = (value: string) => {
@@ -53,7 +53,7 @@ function useCharacters() {
     characters,
     isLoading,
     observerRef,
-    searchChangeHandler,
+    searchChangeHandler
   };
 }
 

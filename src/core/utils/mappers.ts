@@ -11,10 +11,12 @@ export function mapHttpCharacterToCharacter(httpCharacter: HttpCharacter): Chara
     hairColor: httpCharacter.hair_color,
     skinColor: httpCharacter.skin_color,
     created: new Date(httpCharacter.created),
-    edited: new Date(httpCharacter.edited),
+    edited: new Date(httpCharacter.edited)
   };
 }
 
-export function mapHttpPaginationToNextPage(httpPagination: HttpPagination): Pagination['nextPage'] {
+export function mapHttpPaginationToNextPage(
+  httpPagination: HttpPagination
+): Pagination['nextPage'] {
   return httpPagination.next ? Number(httpPagination.next.split('=').at(-1)) : null;
 }
