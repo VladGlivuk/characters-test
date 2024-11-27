@@ -43,7 +43,7 @@ const Character: FC = () => {
 
   useEffect(() => {
     // set default value
-    if (!newNameInputValue && character) setNewNameInputValue(character.name);
+    if (character) setNewNameInputValue(character.name);
   }, [character?.name]);
 
   if (!character) {

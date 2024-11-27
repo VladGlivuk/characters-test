@@ -23,7 +23,7 @@ const CharactersListPage: FC = () => {
       <SimpleGrid columns={[1, 2]} gap={8} margin={12}>
         {!!charactersList.length &&
           charactersList?.map((character) => (
-            <ListCharacter character={character} key={character.url + character.created} />
+            <ListCharacter character={character} key={character.id + character.name} />
           ))}
       </SimpleGrid>
     </div>
