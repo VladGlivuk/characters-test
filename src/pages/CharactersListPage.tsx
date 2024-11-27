@@ -2,7 +2,7 @@ import { FC, useEffect } from 'react';
 import ListCharacter from '@/components/ListCharacter';
 import { Heading, SimpleGrid, Flex } from '@chakra-ui/react';
 import useCharactersStore from '@/store/characters/useCharactersStore';
-import LogoutButton from "@/components/LogoutButton";
+import LogoutButton from '@/components/LogoutButton';
 
 const CharactersListPage: FC = () => {
   const { fetchCharacters, charactersList } = useCharactersStore();

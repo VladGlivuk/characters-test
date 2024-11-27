@@ -1,7 +1,7 @@
-import { User } from "firebase/auth";
-import { HttpCharactersParams } from "./api";
-import { Character } from "./character";
-import { Pagination } from "./pagination";
+import { User } from 'firebase/auth';
+import { HttpCharactersParams } from './api';
+import { Character } from './character';
+import { Pagination } from './pagination';
 
 export type CharactersStore = {
   charactersList: Array<Character>;

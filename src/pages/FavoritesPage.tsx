@@ -19,10 +19,10 @@ const FavoritesPage: FC = () => {
           No favorite characters yet.
         </Heading>
         <Text marginTop="4">
-          Go back to the{' '}
-          <Link to="/" style={{ color: 'teal' }}>
+          Go back to the
+          <Link to="/characters" style={{ color: 'teal' }}>
             main page
-          </Link>{' '}
+          </Link>
           to add some!
         </Text>
       </Box>
