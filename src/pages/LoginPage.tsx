@@ -12,14 +12,14 @@ const LoginPage: FC = () => {
     const user = await signInWithGooglePopup();
 
     setUser(user);
-    navigate('/');
+    navigate('/characters');
   };
 
   const facebookLoginHandler = async () => {
     const user = await signInWithFacebookPopup();
 
     setUser(user);
-    navigate('/');
+    navigate('/characters');
   };
 
   return (

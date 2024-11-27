@@ -29,10 +29,10 @@ function App() {
       <Header />
 
       <Routes>
-        <Route path="/login" element={<LoginPage />} />
+        <Route index path="/login" element={<LoginPage />} />
 
         <Route element={<PrivateRoute />}>
-          <Route index path="/characters" element={<CharactersListPage />} />
+          <Route path="/characters" element={<CharactersListPage />} />
 
           <Route path="/character/:id" element={<CharacterDetailsPage />} />
 

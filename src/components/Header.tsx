@@ -2,6 +2,8 @@ import { FC, useState } from 'react';
 import { css } from '@emotion/react';
 import { Box, Flex, Input, Button, Spacer, Text, Link, HStack } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
+import LogoutButton from './LogoutButton';
+import useUserStore from '@/store/user/useUserStore';
 
 const headerStyles = css`
   padding: 16px;
@@ -14,6 +16,8 @@ const Header: FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
 
+  const { user } = useUserStore();
+
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
   };
@@ -22,22 +26,15 @@ const Header: FC = () => {
     console.log('Searching for:', searchQuery);
   };
 
-  const onLogout = () => {
-    // logout
-  };
-
   const handleNavigate = (path: string) => {
     navigate(path);
   };
-
-  // mock
-  const userName = 'Abobus';
 
   return (
     <Box as="header" css={headerStyles}>
       <Flex align="center">
         <Text marginRight={4} color="teal.200">
-          Welcome, {userName}
+          Welcome, {user?.displayName}
         </Text>
         <Spacer />
         <HStack gap={8}>
@@ -71,9 +68,7 @@ const Header: FC = () => {
           </Button>
         </Flex>
         <Spacer />
-        <Button colorScheme="red" size="sm" onClick={onLogout}>
-          Logout
-        </Button>
+        <LogoutButton />
       </Flex>
     </Box>
   );
