@@ -41,9 +41,7 @@ const Character: FC = () => {
     skinColor,
     homeworld,
     films,
-
     starships,
-
     species,
     vehicles,
     created,
