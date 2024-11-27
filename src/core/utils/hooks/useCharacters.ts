@@ -6,18 +6,12 @@ function useCharacters() {
   const { pagination, fetchCharacters, charactersList } = useCharactersStore();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => {
     (async () => {
       try {
         setIsLoading(true);
 
-        if (searchValue) {
-          await fetchCharacters({ search: searchValue });
-        } else {
-          await fetchCharacters();
-        }
         await fetchCharacters();
       } catch (error) {
         console.error(error);
@@ -25,7 +19,7 @@ function useCharacters() {
         setIsLoading(false);
       }
     })();
-  }, [searchValue, fetchCharacters]);
+  }, []);
 
   const { observerRef } = useInfiniteScroll({
     nextPage: pagination.nextPage,
@@ -34,8 +28,6 @@ function useCharacters() {
       try {
         setIsLoading(true);
 
-        // non-null assertion
-        // asyncCallback will not fire if nextPage is empty value
         await fetchCharacters({ page: pagination.nextPage! });
       } catch (error) {
         console.error(error);
@@ -45,15 +37,10 @@ function useCharacters() {
     }
   });
 
-  const searchChangeHandler = (value: string) => {
-    setSearchValue(value);
-  };
-
   return {
     charactersList,
     isLoading,
     observerRef,
-    searchChangeHandler
   };
 }
 

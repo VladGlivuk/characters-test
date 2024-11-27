@@ -1,18 +1,10 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import ListCharacter from '@/components/ListCharacter';
 import { Heading, SimpleGrid, Flex } from '@chakra-ui/react';
-import useCharactersStore from '@/store/characters/useCharactersStore';
+import useCharacters from '@/core/utils/hooks/useCharacters';
 
 const CharactersListPage: FC = () => {
-  const { fetchCharacters, charactersList } = useCharactersStore();
-
-  useEffect(() => {
-    if (!charactersList.length) {
-      (async () => {
-        await fetchCharacters();
-      })();
-    }
-  }, []);
+  const {charactersList, observerRef} = useCharacters();
 
   return (
     <div>
@@ -28,6 +20,8 @@ const CharactersListPage: FC = () => {
             <ListCharacter character={character} key={character.id + character.name} />
           ))}
       </SimpleGrid>
+
+      <div ref={observerRef} style={{height: "40px", width: "100%"}}></div>
     </div>
   );
 };

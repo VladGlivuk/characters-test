@@ -33,7 +33,7 @@ export function useInfiniteScroll({ nextPage, asyncCallback, isLoading }: Args) 
     if (isIntersecting && nextPage && !isLoading) {
       asyncCallback();
     }
-  }, [isIntersecting, isLoading, nextPage, asyncCallback]);
+  }, [isIntersecting]);
 
   return { observerRef };
 }

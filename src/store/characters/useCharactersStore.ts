@@ -19,13 +19,13 @@ const useCharactersStore = create<CharactersStore>()(
 
       const nextPage = mapHttpPaginationToNextPage(charactersResponse);
 
-      set({
-        charactersList,
+      set((state) => ({
+        charactersList: state.charactersList && nextPage !== state.pagination.nextPage ? [...state.charactersList, ...charactersList] : charactersList,
         pagination: {
           currentPage: params?.page ?? DEFAULT_CURRENT_PAGE,
           nextPage
         }
-      });
+      }));
     },
 
     fetchCharacterById: async (id) => {
