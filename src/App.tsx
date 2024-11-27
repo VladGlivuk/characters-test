@@ -1,17 +1,18 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import CharactersListPage from "./pages/CharactersListPage";
-import CharacterDetailsPage from "./pages/CharacterDetailsPage";
-import FavoritesPage from "./pages/FavoritesPage";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import CharactersListPage from './pages/CharactersListPage';
+import CharacterDetailsPage from './pages/CharacterDetailsPage';
+import FavoritesPage from './pages/FavoritesPage';
+import './index.css';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<CharactersListPage />} />
+        <Route path='/' element={<CharactersListPage />} />
 
-        <Route path="/character/:id" element={<CharacterDetailsPage />} />
+        <Route path='/character/:id' element={<CharacterDetailsPage />} />
 
-        <Route path="/favorites" element={<FavoritesPage />} />
+        <Route path='/favorites' element={<FavoritesPage />} />
       </Routes>
     </BrowserRouter>
   );

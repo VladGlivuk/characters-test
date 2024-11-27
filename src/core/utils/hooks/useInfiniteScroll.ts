@@ -1,17 +1,13 @@
-import { useEffect, useRef, useState } from "react";
-import { Pagination } from "../../store/characters/types";
+import { useEffect, useRef, useState } from 'react';
+import { Pagination } from '../../types/types';
 
 type Args = {
-  nextPage: Pagination["nextPage"];
+  nextPage: Pagination['nextPage'];
   asyncCallback: () => Promise<void>;
   isLoading: boolean;
 };
 
-export function useInfiniteScroll({
-  nextPage,
-  asyncCallback,
-  isLoading,
-}: Args) {
+export function useInfiniteScroll({ nextPage, asyncCallback, isLoading }: Args) {
   const observerRef = useRef<HTMLDivElement | null>(null);
 
   const [isIntersecting, setIsIntersecting] = useState(false);
@@ -21,10 +17,7 @@ export function useInfiniteScroll({
       return;
     }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => setIsIntersecting(entry.isIntersecting),
-      { threshold: 1.0 }
-    );
+    const observer = new IntersectionObserver(([entry]) => setIsIntersecting(entry.isIntersecting), { threshold: 1.0 });
 
     observer.observe(observerRef.current);
 

@@ -1,15 +1,10 @@
-import { create } from "zustand";
-import { devtools } from "zustand/middleware";
-import {
-  httpGetCharacterById,
-  httpGetCharacters,
-} from "../../services/api/requests";
-import {
-  mapHttpCharacterToCharacter,
-  mapHttpPaginationToNextPage,
-} from "../../utils/mappers";
-import { DEFAULT_CURRENT_PAGE, defaultPagination } from "../../utils/constants";
-import { CharactersStore } from "./types";
+import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
+
+import { CharactersStore } from '../../core/types/types';
+import { DEFAULT_CURRENT_PAGE, defaultPagination } from '../../core/utils/constants';
+import { httpGetCharacterById, httpGetCharacters } from '../../services/api/requests';
+import { mapHttpCharacterToCharacter, mapHttpPaginationToNextPage } from '../../core/utils/mappers';
 
 const useCharactersStore = create<CharactersStore>()(
   devtools((set) => ({
@@ -19,9 +14,7 @@ const useCharactersStore = create<CharactersStore>()(
     fetchCharacters: async (params) => {
       const charactersResponse = await httpGetCharacters(params);
 
-      const characters = charactersResponse.results.map(
-        mapHttpCharacterToCharacter
-      );
+      const characters = charactersResponse.results.map(mapHttpCharacterToCharacter);
 
       const nextPage = mapHttpPaginationToNextPage(charactersResponse);
 
@@ -46,19 +39,13 @@ const useCharactersStore = create<CharactersStore>()(
 
     toggleFavorite: (id) => {
       set((state) => ({
-        characters: state.characters.map((character) =>
-          character.id === id
-            ? { ...character, isFavorite: !character.isFavorite }
-            : character
-        ),
+        characters: state.characters.map((character) => (character.id === id ? { ...character, isFavorite: !character.isFavorite } : character)),
       }));
     },
 
     editCharacterName: (id, name) => {
       set((state) => ({
-        characters: state.characters.map((character) =>
-          character.id === id ? { ...character, name } : character
-        ),
+        characters: state.characters.map((character) => (character.id === id ? { ...character, name } : character)),
       }));
     },
   }))
