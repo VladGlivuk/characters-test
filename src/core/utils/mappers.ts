@@ -1,5 +1,5 @@
-import { HttpCharacter, HttpPagination } from '../../services/api/types';
-import { Character, Pagination } from '../types/types';
+import { HttpCharacter, HttpPagination } from '@/core/types';
+import { Character, Pagination } from '@/core/types';
 
 export function mapHttpCharacterToCharacter(httpCharacter: HttpCharacter): Character {
   return {

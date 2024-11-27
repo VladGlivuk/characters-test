@@ -1,10 +1,10 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
-import { CharactersStore } from '../../core/types/types';
-import { DEFAULT_CURRENT_PAGE, defaultPagination } from '../../core/utils/constants';
-import { httpGetCharacterById, httpGetCharacters } from '../../services/api/requests';
-import { mapHttpCharacterToCharacter, mapHttpPaginationToNextPage } from '../../core/utils/mappers';
+import { CharactersStore } from '@/core/types';
+import { DEFAULT_CURRENT_PAGE, defaultPagination } from '@/core/utils/constants';
+import { httpGetCharacterById, httpGetCharacters } from '@/services/api/requests';
+import { mapHttpCharacterToCharacter, mapHttpPaginationToNextPage } from '@/core/utils/mappers';
 
 const useCharactersStore = create<CharactersStore>()(
   devtools((set) => ({

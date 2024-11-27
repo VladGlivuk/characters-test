@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Pagination } from '../../types/types';
+import { Pagination } from '@/core/types';
 
 type Args = {
   nextPage: Pagination['nextPage'];

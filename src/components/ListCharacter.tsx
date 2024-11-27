@@ -1,8 +1,7 @@
-/** @jsxImportSource @emotion/react */
-import React from 'react';
+import { FC } from 'react';
 import { css } from '@emotion/react';
-import { Box, Heading, Text, Stack, Flex, Link, Badge } from '@chakra-ui/react';
-import { Character } from '../core/types/types';
+import { Box, Text, Stack, Flex, Link, Badge } from '@chakra-ui/react';
+import { Character } from '@/core/types';
 
 interface CharacterCardProps {
   character: Character;
@@ -22,13 +21,13 @@ const cardStyles = css`
   }
 `;
 
-const CharacterCard: React.FC<CharacterCardProps> = ({ character }) => {
+const CharacterCard: FC<CharacterCardProps> = ({ character }) => {
   return (
     <Box css={cardStyles}>
       <Stack spaceX={4} spaceY={4}>
-        <Heading as='h2' size='lg' color='teal.500'>
+        <Text fontSize='md' fontWeight='bold' color='teal.500'>
           {character.name}
-        </Heading>
+        </Text>
         <Text>
           <strong>Height:</strong> {character.height} cm
         </Text>

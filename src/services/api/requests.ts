@@ -1,5 +1,5 @@
 import axiosInstance from './axiosInstance';
-import { HttpCharactersParams, HttpPaginatedCharacters, HttpCharacter } from './types';
+import { HttpCharactersParams, HttpPaginatedCharacters, HttpCharacter } from '@/core/types';
 
 export async function httpGetCharacters(params?: HttpCharactersParams) {
   const response = await axiosInstance.get<HttpPaginatedCharacters>('people', {
