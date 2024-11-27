@@ -33,7 +33,10 @@ const useCharactersStore = create<CharactersStore>()(
 
       const character = mapHttpCharacterToCharacter(characterResponse);
 
-      set({ character });
+      set((state) => ({
+        character:
+          state.charactersList.find((existedCharacter) => existedCharacter.id === id) ?? character
+      }));
     },
 
     toggleFavorite: (id) => {
@@ -51,7 +54,8 @@ const useCharactersStore = create<CharactersStore>()(
       set((state) => ({
         charactersList: state.charactersList.map((character) =>
           character.id === id ? { ...character, name } : character
-        )
+        ),
+        character: state.character ? { ...state.character, name } : state.character
       }));
     }
   }))

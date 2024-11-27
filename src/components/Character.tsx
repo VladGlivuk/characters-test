@@ -1,6 +1,17 @@
-import { FC, useEffect } from 'react';
+import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { css } from '@emotion/react';
-import { Box, Heading, Text, Badge, Stack, Link, SimpleGrid, Button, Flex } from '@chakra-ui/react';
+import {
+  Box,
+  Heading,
+  Text,
+  Badge,
+  Stack,
+  Link,
+  SimpleGrid,
+  Button,
+  Flex,
+  Input
+} from '@chakra-ui/react';
 import useCharactersStore from '@/store/characters/useCharactersStore';
 import { useParams } from 'react-router-dom';
 
@@ -15,18 +26,28 @@ const cardStyles = css`
 const Character: FC = () => {
   const { id } = useParams();
 
-  if (!id) return <div>There is no such Character</div>;
+  const [isEditing, setIsEditing] = useState(false);
+  const [newNameInputValue, setNewNameInputValue] = useState<string>('');
 
-  const { fetchCharacterById, toggleFavorite, character } = useCharactersStore();
+  const { fetchCharacterById, toggleFavorite, editCharacterName, character } = useCharactersStore();
+
+  if (!id) return <div>There is no such Character</div>;
 
   useEffect(() => {
     if (character?.id !== +id) {
-      (async () => await fetchCharacterById(+id))();
+      (async () => {
+        await fetchCharacterById(+id);
+      })();
     }
   }, []);
 
+  useEffect(() => {
+    // set default value
+    if (!newNameInputValue && character) setNewNameInputValue(character.name);
+  }, [character?.name]);
+
   if (!character) {
-    return <div></div>;
+    return <div>Character doesn't exist</div>;
   }
 
   const {
@@ -52,12 +73,42 @@ const Character: FC = () => {
     toggleFavorite(+id);
   };
 
+  const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setNewNameInputValue(event.target.value);
+  };
+
+  const saveName = () => {
+    editCharacterName(character.id, newNameInputValue);
+    setIsEditing(false);
+  };
+
   return (
     <Box maxWidth="900px" margin="auto" padding="6" css={cardStyles}>
       <Flex justify="space-between" align="center">
-        <Heading as="h1" size="lg" color="teal.500">
-          {name}
-        </Heading>
+        <Box display={'flex'} gap={'16px'}>
+          {isEditing ? (
+            <>
+              <Input
+                value={newNameInputValue}
+                onChange={handleNameChange}
+                placeholder="Enter new name"
+              />
+              <Button size="sm" colorScheme="teal" onClick={saveName}>
+                Save
+              </Button>
+            </>
+          ) : (
+            <Heading
+              as="h2"
+              size="lg"
+              color="teal.500"
+              onClick={() => setIsEditing(true)}
+              cursor="pointer"
+            >
+              {name}
+            </Heading>
+          )}
+        </Box>
         <Button color={isFavorite ? 'red' : 'teal'} onClick={toggleFavoriteHandler}>
           {isFavorite ? 'Unfavorite' : 'Favorite'}
         </Button>

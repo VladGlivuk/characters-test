@@ -1,8 +1,9 @@
-import { FC } from 'react';
+import { ChangeEvent, FC, SyntheticEvent, useState } from 'react';
 import { css } from '@emotion/react';
-import { Box, Text, Stack, Flex, Link, Badge } from '@chakra-ui/react';
+import { Box, Text, Stack, Flex, Link, Badge, Button, Input, Heading } from '@chakra-ui/react';
 import { Character } from '@/core/types';
 import { useNavigate } from 'react-router-dom';
+import useCharactersStore from '@/store/characters/useCharactersStore';
 
 type Props = {
   character: Character;
@@ -23,56 +24,119 @@ const cardStyles = css`
   }
 `;
 
-const CharacterCard: FC<Props> = ({ character }) => {
+const CharacterCard: FC<Props> = ({
+  character: {
+    id,
+    name,
+    isFavorite,
+    height,
+    mass,
+    gender,
+    hairColor,
+    skinColor,
+    eyeColor,
+    birthYear,
+    homeworld,
+    films,
+    starships
+  }
+}) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [newNameInputValue, setNewNameInputValue] = useState(name);
+
+  const { toggleFavorite, editCharacterName } = useCharactersStore();
+
   const navigate = useNavigate();
 
   const cardClickHandler = () => {
-    navigate(`/character/${character.id}`);
+    navigate(`/character/${id}`);
+  };
+
+  const toggleFavoriteHandler = (event: SyntheticEvent) => {
+    event.stopPropagation();
+    toggleFavorite(id);
+  };
+
+  const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setNewNameInputValue(event.target.value);
+  };
+
+  const saveName = (event: SyntheticEvent) => {
+    event.stopPropagation();
+    editCharacterName(id, newNameInputValue);
+    setIsEditing(false);
+  };
+
+  const nameClickHandler = (event: SyntheticEvent) => {
+    event.stopPropagation();
+    setIsEditing(true);
   };
 
   return (
     <Box css={cardStyles} onClick={cardClickHandler}>
       <Stack spaceX={4} spaceY={4}>
         <Flex justifyContent="space-between">
-          <Text fontSize="md" fontWeight="bold" color="teal.500">
-            {character.name}
-          </Text>
-          <Text fontSize="md" fontWeight="bold" color={character.isFavorite ? 'teal' : 'red'}>
-            {character.isFavorite ? 'Favorite' : 'Not Favorite'}
-          </Text>
+          <Box display={'flex'} gap={'16px'}>
+            {isEditing ? (
+              <>
+                <Input
+                  value={newNameInputValue}
+                  onChange={handleNameChange}
+                  onClick={(event) => event.stopPropagation()}
+                  placeholder="Enter new name"
+                />
+                <Button size="sm" colorScheme="teal" onClick={saveName}>
+                  Save
+                </Button>
+              </>
+            ) : (
+              <Heading
+                as="h2"
+                size="lg"
+                color="teal.500"
+                onClick={nameClickHandler}
+                cursor="pointer"
+              >
+                {name}
+              </Heading>
+            )}
+          </Box>
+          <Button color={isFavorite ? 'red' : 'teal'} onClick={toggleFavoriteHandler}>
+            {isFavorite ? 'Unfavorite' : 'Favorite'}
+          </Button>
         </Flex>
         <Text>
-          <strong>Height:</strong> {character.height} cm
+          <strong>Height:</strong> {height} cm
         </Text>
         <Text>
-          <strong>Mass:</strong> {character.mass} kg
+          <strong>Mass:</strong> {mass} kg
         </Text>
         <Text>
           <strong>Gender:</strong>
-          <Badge color={character.gender === 'male' ? 'blue' : 'pink'}>{character.gender}</Badge>
+          <Badge color={gender === 'male' ? 'blue' : 'pink'}>{gender}</Badge>
         </Text>
         <Text>
-          <strong>Hair Color:</strong> {character.hairColor}
+          <strong>Hair Color:</strong> {hairColor}
         </Text>
         <Text>
-          <strong>Skin Color:</strong> {character.skinColor}
+          <strong>Skin Color:</strong> {skinColor}
         </Text>
         <Text>
-          <strong>Eye Color:</strong> {character.eyeColor}
+          <strong>Eye Color:</strong> {eyeColor}
         </Text>
         <Text>
-          <strong>Birth Year:</strong> {character.birthYear}
+          <strong>Birth Year:</strong> {birthYear}
         </Text>
         <Text>
           <strong>Homeworld:</strong>{' '}
-          <Link href={character.homeworld} color="teal.500">
+          <Link href={homeworld} color="teal.500">
             View Homeworld
           </Link>
         </Text>
         <Flex flexDirection="column">
           <strong>Films:</strong>
           <Stack spaceX={2} mt={2}>
-            {character.films.map((film, index) => (
+            {films.map((film, index) => (
               <Box key={index}>
                 <Link href={film} color="teal.500">
                   {film}
@@ -83,9 +147,9 @@ const CharacterCard: FC<Props> = ({ character }) => {
         </Flex>
         <Flex flexDirection="column">
           <strong>Starships:</strong>
-          {character.starships.length > 0 ? (
+          {starships.length > 0 ? (
             <Stack spaceX={2} mt={2}>
-              {character.starships.map((starship, index) => (
+              {starships.map((starship, index) => (
                 <Box key={index}>
                   <Link href={starship} color="teal.500">
                     {starship}
