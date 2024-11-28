@@ -1,10 +1,10 @@
 import { FC } from 'react';
 import ListCharacter from '@/components/ListCharacter';
-import { Heading, SimpleGrid, Flex, Box } from '@chakra-ui/react';
+import { Heading, SimpleGrid, Flex, Box, Spinner } from '@chakra-ui/react';
 import useCharacters from '@/core/utils/hooks/useCharacters';
 
 const CharactersListPage: FC = () => {
-  const { charactersList, observerRef } = useCharacters();
+  const { charactersList, observerRef, isLoading } = useCharacters();
 
   return (
     <Box position="relative">
@@ -20,6 +20,12 @@ const CharactersListPage: FC = () => {
             <ListCharacter character={character} key={character.id + character.name} />
           ))}
       </SimpleGrid>
+
+      {isLoading && (
+        <Box textAlign="center" mt={10}>
+          <Spinner size="xl" />
+        </Box>
+      )}
 
       <Box ref={observerRef} height={400} width="full" position="absolute" bottom="0"></Box>
     </Box>
