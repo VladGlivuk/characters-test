@@ -29,7 +29,7 @@ function App() {
       <Header />
 
       <Routes>
-        <Route index path="/login" element={<LoginPage />} />
+        <Route index path="/" element={<LoginPage />} />
 
         <Route element={<PrivateRoute />}>
           <Route path="/characters" element={<CharactersListPage />} />

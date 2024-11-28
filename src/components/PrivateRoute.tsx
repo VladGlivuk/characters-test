@@ -11,7 +11,7 @@ const PrivateRoute: FC = () => {
     if (!user && localUser) setUser(JSON.parse(localUser));
   }, []);
 
-  return user || localUser ? <Outlet /> : <Navigate to="/login" />;
+  return user || localUser ? <Outlet /> : <Navigate to="/" />;
 };
 
 export default PrivateRoute;

@@ -8,17 +8,19 @@ function useCharacters() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    (async () => {
-      try {
-        setIsLoading(true);
+    if (!charactersList.length) {
+      (async () => {
+        try {
+          setIsLoading(true);
 
-        await fetchCharacters();
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsLoading(false);
-      }
-    })();
+          await fetchCharacters();
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setIsLoading(false);
+        }
+      })();
+    }
   }, []);
 
   const { observerRef } = useInfiniteScroll({

@@ -8,7 +8,7 @@ const LogoutButton: FC = () => {
 
   const logoutHandler = async () => {
     await logout();
-    navigate('/login');
+    navigate('/');
   };
 
   return (
