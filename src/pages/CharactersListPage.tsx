@@ -1,13 +1,13 @@
 import { FC } from 'react';
 import ListCharacter from '@/components/ListCharacter';
-import { Heading, SimpleGrid, Flex } from '@chakra-ui/react';
+import { Heading, SimpleGrid, Flex, Box } from '@chakra-ui/react';
 import useCharacters from '@/core/utils/hooks/useCharacters';
 
 const CharactersListPage: FC = () => {
   const { charactersList, observerRef } = useCharacters();
 
   return (
-    <div>
+    <Box position="relative">
       <Heading margin={5} textAlign="center">
         <Flex flexDirection="column" alignItems="center" gap={4}>
           All Characters
@@ -21,8 +21,8 @@ const CharactersListPage: FC = () => {
           ))}
       </SimpleGrid>
 
-      <div ref={observerRef} style={{ height: '40px', width: '100%' }}></div>
-    </div>
+      <Box ref={observerRef} height={400} width="full" position="absolute" bottom="0"></Box>
+    </Box>
   );
 };
 

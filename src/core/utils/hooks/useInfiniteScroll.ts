@@ -19,7 +19,7 @@ export function useInfiniteScroll({ nextPage, asyncCallback, isLoading }: Args) 
 
     const observer = new IntersectionObserver(
       ([entry]) => setIsIntersecting(entry.isIntersecting),
-      { threshold: 1.0 }
+      { threshold: 0.2 }
     );
 
     observer.observe(observerRef.current);
